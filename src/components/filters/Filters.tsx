@@ -8,7 +8,7 @@ const FILTERS = [
 
 const Filters: React.FC = () => {
   return (
-    <div className="bg-slate-600">
+    <div className="bg-slate-600 min-h-full">
       <div>Todo filters</div>
       {FILTERS.map((filter) => (
         <Filter key={filter.name} name={filter.name} title={filter.title} />

@@ -19,9 +19,9 @@ const CustomInput: React.FC<CustomInputProps> = ({ name, title, step = 10 }) => 
   };
 
   return (
-    <div className="flex flex-col gap-2 p-4">
+    <div className="flex flex-col gap-2 py-4">
       <div className="flex p-2 gap-2 items-center">
-        <strong className="whitespace-nowrap">{title}</strong>
+        <label className="whitespace-nowrap">{title}</label>
         <Input
           className="text-black max-w-fit"
           type="number"
