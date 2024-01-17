@@ -1,3 +1,5 @@
+import type { CustomLabel, CustomTooltipProps } from '@/types/commonTypes';
+import { COLORS } from '@/utils/constants';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 interface Props {}
@@ -13,17 +15,39 @@ const TotalCost: React.FC<Props> = () => {
     { name: 'Frais de notaire', value: notaryFees },
   ];
 
-  const COLORS = ['rgba(66, 165, 245, 0.75)', 'rgba(0, 194, 251, 0.75)', 'rgba(0, 217, 228, 0.75)'];
+  const RADIAN = Math.PI / 180;
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent }: CustomLabel) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+    const x = cx + radius * Math.cos(-midAngle * RADIAN);
+    const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    return (
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    );
+  };
+
+  const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="p-2" style={{ backgroundColor: payload[0].payload.fill }}>
+          {`${payload[0].name} : ${payload[0].value}€`}
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
-    <div style={{ width: '400px', height: '400px' }}>
+    <div className="w-96 h-96">
       <ResponsiveContainer width="100%" height="100%">
-        <PieChart width={400} height={400}>
+        <PieChart>
           <Pie
             data={pieData}
             cx="50%"
             cy="50%"
             labelLine={false}
+            label={renderCustomizedLabel}
             outerRadius={150}
             innerRadius={75}
             fill="#fff"
@@ -34,7 +58,7 @@ const TotalCost: React.FC<Props> = () => {
             ))}
           </Pie>
           <Legend height={36} formatter={(value, _entry, _index) => <span style={{ color: 'white' }}>{value}</span>} />
-          <Tooltip />
+          <Tooltip content={<CustomTooltip />} />
         </PieChart>
       </ResponsiveContainer>
     </div>

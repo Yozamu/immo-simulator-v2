@@ -8,7 +8,7 @@ interface CardOutputProps {
 
 const CardOutput: React.FC<CardOutputProps> = ({ title, description, Graphic }) => {
   return (
-    <Card className="bg-slate-600 text-white">
+    <Card className="bg-slate-600 text-white p-2">
       <CardTitle>{title}</CardTitle>
       <CardContent>
         <Graphic />
