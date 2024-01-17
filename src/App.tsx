@@ -1,5 +1,4 @@
 import './App.css';
-import { Button } from './components/ui/button';
 import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './components/ui/resizable';
 import Inputs from '@/components/inputs/Inputs';
 import Outputs from '@/components/outputs/Outputs';
@@ -8,10 +7,9 @@ import Filters from '@/components/filters/Filters';
 function App() {
   return (
     <>
-      <h1>Vite + React</h1>
-      <Button onClick={() => alert('ok')}>text</Button>
+      <h1 className="bg-slate-300">Real estate simulator</h1>
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel>
+        <ResizablePanel defaultSize={20} minSize={5} maxSize={40}>
           <Inputs />
         </ResizablePanel>
         <ResizableHandle />
@@ -19,7 +17,7 @@ function App() {
           <Outputs />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel>
+        <ResizablePanel defaultSize={10} minSize={5} maxSize={30}>
           <Filters />
         </ResizablePanel>
       </ResizablePanelGroup>
