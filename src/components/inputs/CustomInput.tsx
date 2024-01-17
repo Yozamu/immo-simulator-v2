@@ -5,12 +5,14 @@ import { ArrowUp, ArrowDown } from 'lucide-react';
 import useMainStore from '@/store/store';
 
 interface CustomInputProps {
+  max?: number;
+  min?: number;
   name: string;
-  title: string;
   step?: number;
+  title: string;
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({ name, title, step = 10 }) => {
+const CustomInput: React.FC<CustomInputProps> = ({ max, min, name, title, step = 10 }) => {
   const setInputValue = useMainStore((state) => state.setInputValue);
   const value = useMainStore((state) => state.inputValues[name]);
 
@@ -36,7 +38,14 @@ const CustomInput: React.FC<CustomInputProps> = ({ name, title, step = 10 }) => 
           <ArrowDown />
         </Button>
       </div>
-      <Slider defaultValue={[value]} value={[value]} step={step} onValueChange={(val) => updateValue(val[0])} />
+      <Slider
+        defaultValue={[value]}
+        max={max}
+        min={min}
+        value={[value]}
+        step={step}
+        onValueChange={(val) => updateValue(val[0])}
+      />
     </div>
   );
 };

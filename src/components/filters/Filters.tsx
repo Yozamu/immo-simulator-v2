@@ -1,10 +1,7 @@
 import Filter from '@/components/filters/Filter';
+import graphics from '@/data/graphics';
 
-const FILTERS = [
-  { title: 'Project is doable', name: 'doable' },
-  { title: 'Total cost', name: 'totalCost' },
-  { title: 'Remaining loan', name: 'remainingLoan' },
-];
+const FILTERS = graphics.map((graphic) => ({ title: graphic.title, name: graphic.name }));
 
 const Filters: React.FC = () => {
   return (

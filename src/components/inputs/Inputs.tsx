@@ -1,13 +1,10 @@
 import React from 'react';
 import CustomInput from './CustomInput';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import inputs from '@/data/inputs';
+import { Switch } from '@/components/ui/switch';
 
-const INPUTS = [
-  { title: 'Prix du bien', name: 'price' },
-  { title: 'Durée du prêt', name: 'loanDuration' },
-  { title: 'Taux du prêt', name: 'loanRate' },
-  { title: "Taux d'assurance", name: 'insuranceRate' },
-];
+const { mainInformation, coInformation, otherInformation } = inputs;
 
 const Inputs: React.FC = () => {
   return (
@@ -16,18 +13,27 @@ const Inputs: React.FC = () => {
         <AccordionItem value="main">
           <AccordionTrigger>Informations principales</AccordionTrigger>
           <AccordionContent>
-            {INPUTS.map((input) => (
-              <CustomInput key={input.name} name={input.name} title={input.title} />
+            {mainInformation.map((input) => (
+              <CustomInput key={input.name} {...input} />
             ))}
           </AccordionContent>
         </AccordionItem>
         <AccordionItem value="co">
           <AccordionTrigger>Co-emprunteur</AccordionTrigger>
-          <AccordionContent>Todo</AccordionContent>
+          <AccordionContent>
+            <Switch name="co" title="Co-emprunteur" />
+            {coInformation.map((input) => (
+              <CustomInput key={input.name} {...input} />
+            ))}
+          </AccordionContent>
         </AccordionItem>
         <AccordionItem value="other">
           <AccordionTrigger>Autres informations</AccordionTrigger>
-          <AccordionContent>Todo</AccordionContent>
+          <AccordionContent>
+            {otherInformation.map((input) => (
+              <CustomInput key={input.name} {...input} />
+            ))}
+          </AccordionContent>
         </AccordionItem>
       </Accordion>
     </div>
