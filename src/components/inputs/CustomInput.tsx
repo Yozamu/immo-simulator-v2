@@ -5,23 +5,30 @@ import { ArrowUp, ArrowDown } from 'lucide-react';
 import useMainStore from '@/store/store';
 
 interface CustomInputProps {
+  name: string;
   title: string;
   step?: number;
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({ title, step = 10 }) => {
+const CustomInput: React.FC<CustomInputProps> = ({ name, title, step = 10 }) => {
   const setInputValue = useMainStore((state) => state.setInputValue);
-  const value = useMainStore((state) => state.inputValues[title]);
+  const value = useMainStore((state) => state.inputValues[name]);
 
   const updateValue = (newValue: number) => {
-    setInputValue(title, +newValue.toFixed(2));
+    setInputValue(name, +newValue.toFixed(2));
   };
 
   return (
     <div className="flex flex-col gap-2 p-4">
       <div className="flex p-2 gap-2 items-center">
-        <strong>{title}</strong>
-        <Input value={value} onChange={(e) => updateValue(+e.target.value)} />
+        <strong className="whitespace-nowrap">{title}</strong>
+        <Input
+          className="text-black max-w-fit"
+          type="number"
+          step={step / 100}
+          value={value}
+          onChange={(e) => updateValue(+e.target.value)}
+        />
         <Button className="p-2" onClick={() => updateValue(value + step / 10)}>
           <ArrowUp />
         </Button>

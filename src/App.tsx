@@ -7,9 +7,9 @@ import Filters from '@/components/filters/Filters';
 function App() {
   return (
     <>
-      <h1 className="bg-slate-300">Real estate simulator</h1>
+      <h1 className="bg-slate-700">Real estate simulator</h1>
       <ResizablePanelGroup direction="horizontal">
-        <ResizablePanel defaultSize={20} minSize={5} maxSize={40}>
+        <ResizablePanel defaultSize={20} minSize={5} maxSize={30}>
           <Inputs />
         </ResizablePanel>
         <ResizableHandle />
