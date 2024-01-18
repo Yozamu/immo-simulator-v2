@@ -1,13 +1,32 @@
+import useMainStore from '@/store/store';
 import type { CustomLabel, CustomTooltipProps } from '@/types/commonTypes';
 import { COLORS } from '@/utils/constants';
+import {
+  calculateLoanAmount,
+  calculateMonthlyInsuranceCost,
+  calculateNotaryFees,
+  calculateTotalInsuranceCost,
+  calculateTotalInterestCost,
+  calculateTotalcontribution,
+} from '@/utils/simulationResults';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
 interface Props {}
 
 const TotalCost: React.FC<Props> = () => {
-  const totalInterestCost = 1000;
-  const totalInsuranceCost = 1000;
-  const notaryFees = 1000;
+  const price = useMainStore((state) => state.inputValues.price);
+  const loanDuration = useMainStore((state) => state.inputValues.loanDuration);
+  const loanRate = useMainStore((state) => state.inputValues.loanRate);
+  const contribution = useMainStore((state) => state.inputValues.contribution);
+  const coContribution = useMainStore((state) => state.inputValues.coContribution);
+  const insuranceRate = useMainStore((state) => state.inputValues.insuranceRate);
+
+  const notaryFees = calculateNotaryFees(price);
+  const totalContribution = calculateTotalcontribution(contribution, coContribution);
+  const loanAmount = calculateLoanAmount(price, totalContribution, notaryFees);
+  const totalInterestCost = calculateTotalInterestCost(loanAmount, loanRate, loanDuration);
+  const monthlyInsuranceCost = calculateMonthlyInsuranceCost(loanAmount, insuranceRate);
+  const totalInsuranceCost = calculateTotalInsuranceCost(monthlyInsuranceCost, loanDuration);
 
   const pieData = [
     { name: 'Intérêts', value: totalInterestCost },

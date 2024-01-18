@@ -1,7 +1,8 @@
+import type { SimulationData } from '@/types/commonTypes';
 import { create } from 'zustand';
 
 type StoreState = {
-  inputValues: Record<string, number>;
+  inputValues: SimulationData;
   filters: Record<string, boolean>;
   setInputValue: (name: string, value: number) => void;
   setFilterValue: (name: string, value: boolean) => void;

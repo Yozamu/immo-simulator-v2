@@ -20,3 +20,16 @@ export type InputValue = {
   max: number;
   step: number;
 };
+
+export type SimulationData = {
+  price: number;
+  contribution: number;
+  loanRate: number;
+  insuranceRate: number;
+  salary: number;
+  loanDuration: number;
+  coLoanPercent: number;
+  coSalary: number;
+  coContribution: number;
+  worksBudget: number;
+};
