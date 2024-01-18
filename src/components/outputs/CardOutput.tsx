@@ -3,15 +3,15 @@ import { Card, CardContent, CardDescription, CardTitle } from '@/components/ui/c
 interface CardOutputProps {
   title: string;
   description?: string;
-  Graphic: React.FC;
+  Component: React.FC;
 }
 
-const CardOutput: React.FC<CardOutputProps> = ({ title, description, Graphic }) => {
+const CardOutput: React.FC<CardOutputProps> = ({ title, description, Component }) => {
   return (
     <Card className="bg-slate-600 text-white p-2 h-fit">
       <CardTitle>{title}</CardTitle>
       <CardContent>
-        <Graphic />
+        <Component />
       </CardContent>
       <CardDescription className="text-white">{description}</CardDescription>
     </Card>

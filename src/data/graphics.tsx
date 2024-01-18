@@ -1,12 +1,13 @@
+import MonthlyPayment from '@/components/graphics/MonthlyPayment';
 import TotalCost from '@/components/graphics/TotalCost';
 
 const graphics = [
-  { Graphic: TotalCost, description: 'Description', title: 'Faisabilité du projet', name: 'doable' },
-  { Graphic: TotalCost, title: "Coût total de l'opération", name: 'totalCost' },
-  { Graphic: TotalCost, description: 'Description', title: 'Montant du prêt restant', name: 'remainingLoan' },
+  { Component: TotalCost, title: 'Faisabilité du projet', name: 'doable' },
+  { Component: MonthlyPayment, title: 'Paiement mensuel', name: 'doable' },
+  { Component: TotalCost, title: "Coût total de l'opération", name: 'totalCost' },
+  { Component: TotalCost, title: 'Montant du prêt restant', name: 'remainingLoan' },
   {
-    Graphic: TotalCost,
-    description: 'Description',
+    Component: TotalCost,
     title: 'Equivalence loyer (revente sans perte)',
     name: 'rentEquivalentNoLoss',
   },

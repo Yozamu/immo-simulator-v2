@@ -20,9 +20,10 @@ const TotalCost: React.FC<Props> = () => {
   const contribution = useMainStore((state) => state.inputValues.contribution);
   const coContribution = useMainStore((state) => state.inputValues.coContribution);
   const insuranceRate = useMainStore((state) => state.inputValues.insuranceRate);
+  const hasCoBorrower = useMainStore((state) => state.filters.hasCoBorrower);
 
   const notaryFees = calculateNotaryFees(price);
-  const totalContribution = calculateTotalcontribution(contribution, coContribution);
+  const totalContribution = calculateTotalcontribution(contribution, hasCoBorrower ? coContribution : 0);
   const loanAmount = calculateLoanAmount(price, totalContribution, notaryFees);
   const totalInterestCost = calculateTotalInterestCost(loanAmount, loanRate, loanDuration);
   const monthlyInsuranceCost = calculateMonthlyInsuranceCost(loanAmount, insuranceRate);
