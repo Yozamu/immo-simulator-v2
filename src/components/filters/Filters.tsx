@@ -1,13 +1,18 @@
 import Filter from '@/components/filters/Filter';
-import graphics from '@/data/graphics';
+import { Separator } from '@/components/ui/separator';
+import filters from '@/data/filters';
 
-const FILTERS = graphics.map((graphic) => ({ title: graphic.title, name: graphic.name }));
+const { baseFilters, graphicsFilters } = filters;
 
 const Filters: React.FC = () => {
   return (
     <div className="bg-slate-600 min-h-full">
-      <div>Todo filters</div>
-      {FILTERS.map((filter) => (
+      <h2>Filtres</h2>
+      {baseFilters.map((filter) => (
+        <Filter key={filter.name} name={filter.name} title={filter.title} />
+      ))}
+      <Separator />
+      {graphicsFilters.map((filter) => (
         <Filter key={filter.name} name={filter.name} title={filter.title} />
       ))}
     </div>

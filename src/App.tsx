@@ -17,7 +17,7 @@ function App() {
           <Outputs />
         </ResizablePanel>
         <ResizableHandle />
-        <ResizablePanel defaultSize={10} minSize={5} maxSize={30}>
+        <ResizablePanel defaultSize={5} minSize={5} maxSize={20}>
           <Filters />
         </ResizablePanel>
       </ResizablePanelGroup>

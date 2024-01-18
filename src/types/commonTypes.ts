@@ -12,3 +12,11 @@ export type CustomLabel = {
   outerRadius: number;
   percent: number;
 };
+
+export type InputValue = {
+  title: string;
+  name: string;
+  min: number;
+  max: number;
+  step: number;
+};

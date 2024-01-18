@@ -1,16 +1,13 @@
 import { create } from 'zustand';
 
 type StoreState = {
-  hasCoBorrower: boolean;
   inputValues: Record<string, number>;
   filters: Record<string, boolean>;
   setInputValue: (name: string, value: number) => void;
   setFilterValue: (name: string, value: boolean) => void;
-  toggleCoBorrower: () => void;
 };
 
 const useMainStore = create<StoreState>((set) => ({
-  hasCoBorrower: false,
   inputValues: {
     price: 180000,
     loanDuration: 20,
@@ -24,6 +21,7 @@ const useMainStore = create<StoreState>((set) => ({
     worksBudget: 0,
   },
   filters: {
+    hasCoBorrower: false,
     doable: true,
     totalCost: true,
     remainingLoan: true,
@@ -33,7 +31,6 @@ const useMainStore = create<StoreState>((set) => ({
   },
   setInputValue: (name, value) => set((state) => ({ inputValues: { ...state.inputValues, [name]: value } })),
   setFilterValue: (name, value) => set((state) => ({ filters: { ...state.filters, [name]: value } })),
-  toggleCoBorrower: () => set((state) => ({ hasCoBorrower: !state.hasCoBorrower })),
 }));
 
 export default useMainStore;

@@ -23,7 +23,7 @@ const CustomInput: React.FC<CustomInputProps> = ({ max, min, name, title, step =
   return (
     <div className="flex flex-col gap-2 py-4">
       <div className="flex p-2 gap-2 items-center">
-        <label className="whitespace-nowrap">{title}</label>
+        <label>{title}</label>
         <Input
           className="text-black max-w-fit"
           type="number"

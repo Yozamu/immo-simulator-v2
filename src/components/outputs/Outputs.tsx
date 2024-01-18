@@ -7,7 +7,7 @@ const Outputs: React.FC = () => {
   const filteredOutputs = graphics.filter((output) => filters[output.name]);
 
   return (
-    <div className="bg-slate-500 flex flex-wrap gap-4 p-2 justify-center min-h-full">
+    <div className="bg-slate-500 flex flex-wrap gap-4 p-2 justify-center content-start min-h-full">
       {filteredOutputs.map((card, i) => (
         <CardOutput key={i} {...card} />
       ))}
