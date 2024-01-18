@@ -8,8 +8,8 @@ const Outputs: React.FC = () => {
 
   return (
     <div className="bg-slate-500 flex flex-wrap gap-4 p-2 justify-center content-start min-h-full">
-      {filteredOutputs.map((card, i) => (
-        <CardOutput key={i} {...card} />
+      {filteredOutputs.map((card) => (
+        <CardOutput key={card.name} {...card} />
       ))}
     </div>
   );

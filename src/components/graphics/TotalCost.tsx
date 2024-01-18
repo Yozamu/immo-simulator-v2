@@ -11,9 +11,7 @@ import {
 } from '@/utils/simulationResults';
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recharts';
 
-interface Props {}
-
-const TotalCost: React.FC<Props> = () => {
+const TotalCost = () => {
   const price = useMainStore((state) => state.inputValues.price);
   const loanDuration = useMainStore((state) => state.inputValues.loanDuration);
   const loanRate = useMainStore((state) => state.inputValues.loanRate);

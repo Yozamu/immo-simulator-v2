@@ -22,7 +22,7 @@ const InputsSectionItems = ({ title, value, info }: { title: string; value: stri
 const Inputs: React.FC = () => {
   return (
     <div className="bg-slate-600 p-2 min-h-full whitespace-nowrap">
-      <Accordion type="multiple" defaultValue={['main']}>
+      <Accordion type="single" defaultValue={'main'}>
         <InputsSectionItems title="Informations principales" value="main" info={mainInformation} />
         <InputsSectionItems title="Co-emprunteur" value="co" info={coInformation} />
         <InputsSectionItems title="Autres informations" value="other" info={otherInformation} />

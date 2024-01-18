@@ -24,6 +24,7 @@ const useMainStore = create<StoreState>((set) => ({
   filters: {
     hasCoBorrower: false,
     doable: true,
+    monthlyPayment: true,
     totalCost: true,
     remainingLoan: true,
     rentEquivalentNoLoss: false,

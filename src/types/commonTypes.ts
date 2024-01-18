@@ -1,6 +1,6 @@
 export type CustomTooltipProps = {
   active?: boolean;
-  payload?: { payload: { subject: string; fill: string }; name: string; value: string; fill: string }[];
+  payload?: { payload: { subject: string; fill: string; name: string }; name: string; value: string; fill: string }[];
   label?: string;
 };
 
