@@ -13,6 +13,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 
 const SpendingsFromProject = () => {
   const price = useMainStore((state) => state.inputValues.price);
+  const worksBudget = useMainStore((state) => state.inputValues.worksBudget);
   const loanDuration = useMainStore((state) => state.inputValues.loanDuration);
   const loanRate = useMainStore((state) => state.inputValues.loanRate);
   const contribution = useMainStore((state) => state.inputValues.contribution);
@@ -23,7 +24,7 @@ const SpendingsFromProject = () => {
 
   const notaryFees = calculateNotaryFees(price);
   const totalContribution = calculateTotalcontribution(contribution, hasCoBorrower ? coContribution : 0);
-  const loanAmount = calculateLoanAmount(price, totalContribution, notaryFees);
+  const loanAmount = calculateLoanAmount(price, totalContribution, notaryFees, worksBudget);
   const monthlyLoanCost = calculateMonthlyLoanCost(loanAmount, loanRate, loanDuration);
   const monthlyInsuranceCost = calculateMonthlyInsuranceCost(loanAmount, insuranceRate);
   const monthlyPayment = calculateMonthlyPayment(monthlyLoanCost, monthlyInsuranceCost);

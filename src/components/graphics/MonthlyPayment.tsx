@@ -13,6 +13,7 @@ import { COLORS } from '@/utils/constants';
 
 const MonthlyPayment = () => {
   const price = useMainStore((state) => state.inputValues.price);
+  const worksBudget = useMainStore((state) => state.inputValues.worksBudget);
   const loanDuration = useMainStore((state) => state.inputValues.loanDuration);
   const salary = useMainStore((state) => state.inputValues.salary);
   const coSalary = useMainStore((state) => state.inputValues.coSalary);
@@ -25,7 +26,7 @@ const MonthlyPayment = () => {
   const notaryFees = calculateNotaryFees(price);
   const totalSalary = calculateTotalSalary(salary, hasCoBorrower ? coSalary : 0);
   const totalContribution = calculateTotalcontribution(contribution, hasCoBorrower ? coContribution : 0);
-  const loanAmount = calculateLoanAmount(price, totalContribution, notaryFees);
+  const loanAmount = calculateLoanAmount(price, totalContribution, notaryFees, worksBudget);
   const monthlyLoanCost = calculateMonthlyLoanCost(loanAmount, loanRate, loanDuration);
   const monthlyInsuranceCost = calculateMonthlyInsuranceCost(loanAmount, insuranceRate);
   const monthlyPayment = calculateMonthlyPayment(monthlyLoanCost, monthlyInsuranceCost);

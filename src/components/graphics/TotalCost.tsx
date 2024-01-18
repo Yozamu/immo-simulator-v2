@@ -13,6 +13,7 @@ import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from 'recha
 
 const TotalCost = () => {
   const price = useMainStore((state) => state.inputValues.price);
+  const worksBudget = useMainStore((state) => state.inputValues.worksBudget);
   const loanDuration = useMainStore((state) => state.inputValues.loanDuration);
   const loanRate = useMainStore((state) => state.inputValues.loanRate);
   const contribution = useMainStore((state) => state.inputValues.contribution);
@@ -22,7 +23,7 @@ const TotalCost = () => {
 
   const notaryFees = calculateNotaryFees(price);
   const totalContribution = calculateTotalcontribution(contribution, hasCoBorrower ? coContribution : 0);
-  const loanAmount = calculateLoanAmount(price, totalContribution, notaryFees);
+  const loanAmount = calculateLoanAmount(price, totalContribution, notaryFees, worksBudget);
   const totalInterestCost = calculateTotalInterestCost(loanAmount, loanRate, loanDuration);
   const monthlyInsuranceCost = calculateMonthlyInsuranceCost(loanAmount, insuranceRate);
   const totalInsuranceCost = calculateTotalInsuranceCost(monthlyInsuranceCost, loanDuration);

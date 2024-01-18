@@ -10,8 +10,13 @@ export const calculateNotaryFees = (price: number): number => {
   return price * 0.08;
 };
 
-export const calculateLoanAmount = (price: number, totalcontribution: number, notaryFees: number): number => {
-  return price - totalcontribution + notaryFees;
+export const calculateLoanAmount = (
+  price: number,
+  totalcontribution: number,
+  notaryFees: number,
+  worksBudget = 0
+): number => {
+  return price - totalcontribution + notaryFees + worksBudget;
 };
 
 export const calculateMonthlyLoanCost = (loanAmount: number, loanRate: number, years: number): number => {
