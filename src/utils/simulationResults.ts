@@ -74,3 +74,18 @@ export const calculateTotalCost = (totalLoanCost: number, notaryFees: number): n
   const totalCost = (totalLoanCost + notaryFees).toFixed();
   return +totalCost;
 };
+
+export const calculateQuota = (
+  coLoanPercent: number,
+  loanAmount: number,
+  contribution: number,
+  price: number
+): number => {
+  const quota = (((((100 - coLoanPercent) / 100) * loanAmount + contribution) / (price * 1.08)) * 100).toFixed();
+  return +quota;
+};
+
+export const calculateLeftToLive = (salary: number, monthlyPayment: number, loanPercent: number): number => {
+  const leftToLive = (((salary - (monthlyPayment * loanPercent) / 100) / salary) * 100).toFixed();
+  return +leftToLive;
+};
