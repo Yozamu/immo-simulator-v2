@@ -10,14 +10,14 @@ type StoreState = {
 
 const useMainStore = create<StoreState>((set) => ({
   inputValues: {
-    price: 180000,
+    price: 120000,
     loanDuration: 20,
-    loanRate: 4,
+    loanRate: 3.5,
     insuranceRate: 0.15,
-    salary: 2200,
-    contribution: 15000,
-    coSalary: 1700,
-    coContribution: 5000,
+    salary: 2400,
+    contribution: 25000,
+    coSalary: 1800,
+    coContribution: 15000,
     coLoanPercent: 50,
     worksBudget: 0,
   },

@@ -16,7 +16,7 @@ export const calculateLoanAmount = (
   notaryFees: number,
   worksBudget = 0
 ): number => {
-  return price - totalcontribution + notaryFees + worksBudget;
+  return Math.max(0, price - totalcontribution + notaryFees + worksBudget);
 };
 
 export const calculateMonthlyLoanCost = (loanAmount: number, loanRate: number, years: number): number => {
