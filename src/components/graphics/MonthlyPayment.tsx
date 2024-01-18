@@ -49,14 +49,12 @@ const MonthlyPayment = () => {
   ];
 
   return (
-    <div className="w-96 h-96">
-      <ResponsiveContainer width="100%" height="100%">
-        <RadialBarChart cx="50%" cy="50%" innerRadius={80} outerRadius={160} barSize={16} data={data}>
-          <RadialBar label={{ position: 'insideEnd', fill: '#fff' }} background dataKey="uv" />
-          <Legend formatter={(value, _entry, _index) => <span style={{ color: 'white' }}>{value}</span>} />
-        </RadialBarChart>
-      </ResponsiveContainer>
-    </div>
+    <ResponsiveContainer width="100%" height="100%">
+      <RadialBarChart cx="50%" cy="50%" innerRadius={80} outerRadius={160} barSize={16} data={data}>
+        <RadialBar label={{ position: 'insideEnd', fill: '#fff' }} background dataKey="uv" />
+        <Legend formatter={(value, _entry, _index) => <span style={{ color: 'white' }}>{value}</span>} />
+      </RadialBarChart>
+    </ResponsiveContainer>
   );
 };
 

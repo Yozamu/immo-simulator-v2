@@ -65,28 +65,26 @@ const RentEquivalentNoLoss = () => {
   };
 
   return (
-    <div className="w-96 h-96">
-      <ResponsiveContainer width="100%" height="100%">
-        <AreaChart
-          width={500}
-          height={400}
-          data={data}
-          margin={{
-            top: 20,
-            right: 40,
-            left: 0,
-            bottom: 0,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="white" />
-          <XAxis dataKey="year" stroke="white" />
-          <YAxis stroke="white" />
-          <Tooltip content={<CustomTooltip />} />
-          <Area type="monotone" dataKey="equivalent" stroke={COLORS[0]} fill={COLORS[0]} />
-          <Area type="monotone" dataKey="equivalentWithCapital" stroke={COLORS[1]} fill={COLORS[1]} />
-        </AreaChart>
-      </ResponsiveContainer>
-    </div>
+    <ResponsiveContainer width="100%" height="100%">
+      <AreaChart
+        width={500}
+        height={400}
+        data={data}
+        margin={{
+          top: 20,
+          right: 40,
+          left: 0,
+          bottom: 0,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" stroke="white" />
+        <XAxis dataKey="year" stroke="white" />
+        <YAxis stroke="white" />
+        <Tooltip content={<CustomTooltip />} />
+        <Area type="monotone" dataKey="equivalent" stroke={COLORS[0]} fill={COLORS[0]} />
+        <Area type="monotone" dataKey="equivalentWithCapital" stroke={COLORS[1]} fill={COLORS[1]} />
+      </AreaChart>
+    </ResponsiveContainer>
   );
 };
 

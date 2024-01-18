@@ -73,29 +73,27 @@ const RemainingLoan = () => {
   };
 
   return (
-    <div className="w-96 h-96">
-      <ResponsiveContainer width="100%" height="100%">
-        <BarChart
-          width={500}
-          height={300}
-          data={data}
-          margin={{
-            top: 20,
-            right: 30,
-            left: 20,
-            bottom: 5,
-          }}
-        >
-          <CartesianGrid strokeDasharray="3 3" stroke="white" />
-          <XAxis dataKey="year" stroke="white" />
-          <YAxis stroke="white" />
-          <Tooltip content={<CustomTooltip />} />
-          <Legend formatter={(value, _entry, _index) => <span style={{ color: 'white' }}>{value}</span>} />
-          <Bar dataKey="interests" stackId="a" fill={COLORS[0]} name="Intérêts restants" />
-          <Bar dataKey="capital" stackId="a" fill={COLORS[1]} name="Capital restant" />
-        </BarChart>
-      </ResponsiveContainer>
-    </div>
+    <ResponsiveContainer width="100%" height="100%">
+      <BarChart
+        width={500}
+        height={300}
+        data={data}
+        margin={{
+          top: 20,
+          right: 30,
+          left: 20,
+          bottom: 5,
+        }}
+      >
+        <CartesianGrid strokeDasharray="3 3" stroke="white" />
+        <XAxis dataKey="year" stroke="white" />
+        <YAxis stroke="white" />
+        <Tooltip content={<CustomTooltip />} />
+        <Legend formatter={(value, _entry, _index) => <span style={{ color: 'white' }}>{value}</span>} />
+        <Bar dataKey="interests" stackId="a" fill={COLORS[0]} name="Intérêts restants" />
+        <Bar dataKey="capital" stackId="a" fill={COLORS[1]} name="Capital restant" />
+      </BarChart>
+    </ResponsiveContainer>
   );
 };
 

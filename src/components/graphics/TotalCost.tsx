@@ -57,29 +57,27 @@ const TotalCost = () => {
   };
 
   return (
-    <div className="w-96 h-96">
-      <ResponsiveContainer width="100%" height="100%">
-        <PieChart>
-          <Pie
-            data={pieData}
-            cx="50%"
-            cy="50%"
-            labelLine={false}
-            label={renderCustomizedLabel}
-            outerRadius={150}
-            innerRadius={75}
-            fill="#fff"
-            dataKey="value"
-          >
-            {pieData.map((_entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Legend height={36} formatter={(value, _entry, _index) => <span style={{ color: 'white' }}>{value}</span>} />
-          <Tooltip content={<CustomTooltip />} />
-        </PieChart>
-      </ResponsiveContainer>
-    </div>
+    <ResponsiveContainer width="100%" height="100%">
+      <PieChart>
+        <Pie
+          data={pieData}
+          cx="50%"
+          cy="50%"
+          labelLine={false}
+          label={renderCustomizedLabel}
+          outerRadius={150}
+          innerRadius={75}
+          fill="#fff"
+          dataKey="value"
+        >
+          {pieData.map((_entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
+        </Pie>
+        <Legend height={36} formatter={(value, _entry, _index) => <span style={{ color: 'white' }}>{value}</span>} />
+        <Tooltip content={<CustomTooltip />} />
+      </PieChart>
+    </ResponsiveContainer>
   );
 };
 
