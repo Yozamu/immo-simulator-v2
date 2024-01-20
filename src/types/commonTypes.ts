@@ -21,7 +21,7 @@ export type CustomLabel = {
 
 export type InputValue = {
   title: string;
-  name: string;
+  name: keyof SimulationData;
   min: number;
   max: number;
   step: number;

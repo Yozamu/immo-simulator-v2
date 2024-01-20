@@ -3,11 +3,12 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { ArrowUp, ArrowDown } from 'lucide-react';
 import useMainStore from '@/store/store';
+import type { SimulationData } from '@/types/commonTypes';
 
 interface CustomInputProps {
   max?: number;
   min?: number;
-  name: string;
+  name: keyof SimulationData;
   step?: number;
   title: string;
 }
