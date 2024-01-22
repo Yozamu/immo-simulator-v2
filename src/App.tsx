@@ -3,8 +3,20 @@ import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from './componen
 import Inputs from '@/components/inputs/Inputs';
 import Outputs from '@/components/outputs/Outputs';
 import Filters from '@/components/filters/Filters';
+import useIsMobile from '@/hooks/useIsMobile';
 
 function App() {
+  const isMobile = useIsMobile();
+
+  if (isMobile)
+    return (
+      <>
+        <Inputs />
+        <Outputs />
+        <Filters />
+      </>
+    );
+
   return (
     <>
       <ResizablePanelGroup className="min-h-[100vh]" direction="horizontal">
