@@ -31,6 +31,7 @@ const useMainStore = create<StoreState>((set) => ({
     savingsWithSpendings: true,
     spendingsFromProjects: false,
     quotitiesAndLeftToLive: false,
+    soulte: false,
   },
   setInputValue: (name, value) => set((state) => ({ inputValues: { ...state.inputValues, [name]: value } })),
   setFilterValue: (name, value) => set((state) => ({ filters: { ...state.filters, [name]: value } })),

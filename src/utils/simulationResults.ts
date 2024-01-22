@@ -94,3 +94,7 @@ export const calculateLeftToLive = (salary: number, monthlyPayment: number, loan
   const leftToLive = (((salary - (monthlyPayment * loanPercent) / 100) / salary) * 100).toFixed();
   return +leftToLive;
 };
+
+export const calculateSoulte = (price: number, capitalLeft: number, quotity: number) => {
+  return +((price - capitalLeft) * (quotity / 100)).toFixed();
+};
