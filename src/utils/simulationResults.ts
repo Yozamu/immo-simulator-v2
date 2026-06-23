@@ -98,3 +98,86 @@ export const calculateLeftToLive = (salary: number, monthlyPayment: number, loan
 export const calculateSoulte = (price: number, capitalLeft: number, quotity: number) => {
   return +((price - capitalLeft) * (quotity / 100)).toFixed();
 };
+
+export const calculatePnoCost = (price: number): number => {
+  return Math.round(Math.min(250, Math.max(80, price * 0.0007)));
+};
+
+export const calculateTotalAcquisitionCost = (price: number, notaryFees: number, worksBudget: number): number => {
+  return price + notaryFees + worksBudget;
+};
+
+export const calculateAnnualNonRecoverableCopro = (coproCharges: number, recoverableCharges: number, tom: number): number => {
+  const annualCopro = coproCharges * 12;
+  const annualRecoverableFromCopro = Math.max(0, recoverableCharges * 12 - tom);
+  return Math.max(0, annualCopro - annualRecoverableFromCopro);
+};
+
+export const calculateAnnualPropertyTaxNetOfTom = (propertyTax: number, tom: number): number => {
+  return Math.max(0, propertyTax - tom);
+};
+
+export const calculateRentalTaxableIncome = (
+  rentHC: number,
+  nonRecoverableCoproAnnual: number,
+  propertyTaxNetOfTom: number,
+  pnoAnnual: number,
+  firstYearInterest: number
+): number => {
+  return rentHC * 12 - nonRecoverableCoproAnnual - propertyTaxNetOfTom - pnoAnnual - firstYearInterest;
+};
+
+export const calculateRentalIncomeTax = (taxableIncome: number, tmi: number): number => {
+  if (taxableIncome <= 0) return 0;
+  const taxRate = (tmi + 17.2) / 100;
+  return +(taxableIncome * taxRate).toFixed(2);
+};
+
+export const calculateGrossYield = (rentHC: number, totalAcquisitionCost: number): number => {
+  if (totalAcquisitionCost <= 0) return 0;
+  return +(((rentHC * 12) / totalAcquisitionCost) * 100).toFixed(2);
+};
+
+export const calculateNetYield = (
+  rentHC: number,
+  nonRecoverableCoproAnnual: number,
+  propertyTaxNetOfTom: number,
+  pnoAnnual: number,
+  vacancyCost: number,
+  totalAcquisitionCost: number
+): number => {
+  if (totalAcquisitionCost <= 0) return 0;
+  const netIncome = rentHC * 12 - nonRecoverableCoproAnnual - propertyTaxNetOfTom - pnoAnnual - vacancyCost;
+  return +((netIncome / totalAcquisitionCost) * 100).toFixed(2);
+};
+
+export const calculateMonthlyCashflow = (
+  rentHC: number,
+  recoverableCharges: number,
+  monthlyPayment: number,
+  coproCharges: number,
+  propertyTax: number,
+  pnoAnnual: number,
+  annualTax: number
+): number => {
+  const monthlyInflow = rentHC + recoverableCharges;
+  const monthlyOutflow = monthlyPayment + coproCharges + propertyTax / 12 + pnoAnnual / 12 + annualTax / 12;
+  return +(monthlyInflow - monthlyOutflow).toFixed(2);
+};
+
+export const calculateVacancyCost = (rentHC: number): number => {
+  return rentHC;
+};
+
+export const calculateRentalIndebtedness = (
+  monthlyPayment: number,
+  currentCredits: number,
+  totalSalary: number,
+  rentHC: number
+): number => {
+  const charges = monthlyPayment + currentCredits;
+  const income = totalSalary + 0.7 * rentHC;
+  if (income <= 0) return 1;
+  return +(charges / income).toFixed(3);
+};
+

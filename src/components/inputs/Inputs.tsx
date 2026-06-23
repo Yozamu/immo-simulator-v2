@@ -6,7 +6,7 @@ import inputs from '@/data/inputs';
 import type { InputValue } from '@/types/commonTypes';
 import useIsMobile from '@/hooks/useIsMobile';
 
-const { mainInformation, coInformation, otherInformation } = inputs;
+const { mainInformation, coInformation, otherInformation, rentalInvestmentInformation } = inputs;
 
 const InputsSectionItems = ({ title, value, info }: { title: string; value: string; info: InputValue[] }) => {
   return (
@@ -45,6 +45,7 @@ const Inputs: React.FC = () => {
       <InputsSectionItems title="Informations principales" value="main" info={mainInformation} />
       <InputsSectionItems title="Co-emprunteur" value="co" info={coInformation} />
       <InputsSectionItems title="Autres informations" value="other" info={otherInformation} />
+      <InputsSectionItems title="Investissement locatif" value="rental" info={rentalInvestmentInformation} />
     </>
   );
 

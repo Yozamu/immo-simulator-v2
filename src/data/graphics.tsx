@@ -3,6 +3,8 @@ import ProjectFeasibility from '@/components/graphics/ProjectFeasibility';
 import QuotitiesAndLeftToLive from '@/components/graphics/QuotitiesAndLeftToLive';
 import RemainingLoan from '@/components/graphics/RemainingLoan';
 import RentEquivalentNoLoss from '@/components/graphics/RentEquivalentNoLoss';
+import RentalInvestment from '@/components/graphics/RentalInvestment';
+import RentalInvestmentDetails from '@/components/graphics/RentalInvestmentDetails';
 import SavingsWithSpendings from '@/components/graphics/SavingsWithSpendings';
 import Soulte from '@/components/graphics/Soulte';
 import SpendingsFromProject from '@/components/graphics/SpendingsFromProject';
@@ -22,6 +24,12 @@ const graphics = [
   { Component: SpendingsFromProject, title: 'Dépenses engendrées par le projet', name: 'spendingsFromProjects' },
   { Component: QuotitiesAndLeftToLive, title: 'Quotités et reste à vivre', name: 'quotitiesAndLeftToLive' },
   { Component: Soulte, title: 'Soulte', name: 'soulte' },
+  { Component: RentalInvestment, title: 'Investissement locatif - synthèse', name: 'rentalInvestment' },
+  {
+    Component: RentalInvestmentDetails,
+    title: 'Investissement locatif - fiscalité & coûts',
+    name: 'rentalInvestmentDetails',
+  },
 ];
 
 export default graphics;

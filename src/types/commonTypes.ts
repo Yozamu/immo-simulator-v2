@@ -21,6 +21,7 @@ export type CustomLabel = {
 
 export type InputValue = {
   title: string;
+  subtitle?: string;
   name: keyof SimulationData;
   min: number;
   max: number;
@@ -38,4 +39,11 @@ export type SimulationData = {
   coSalary: number;
   coContribution: number;
   worksBudget: number;
+  rentHC: number;
+  coproCharges: number;
+  recoverableCharges: number;
+  propertyTax: number;
+  tom: number;
+  tmi: number;
+  currentCredits: number;
 };

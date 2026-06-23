@@ -11,9 +11,10 @@ interface CustomInputProps {
   name: keyof SimulationData;
   step?: number;
   title: string;
+  subtitle?: string;
 }
 
-const CustomInput: React.FC<CustomInputProps> = ({ max, min, name, title, step = 10 }) => {
+const CustomInput: React.FC<CustomInputProps> = ({ max, min, name, title, subtitle, step = 10 }) => {
   const setInputValue = useMainStore((state) => state.setInputValue);
   const value = useMainStore((state) => state.inputValues[name]);
 
@@ -24,7 +25,10 @@ const CustomInput: React.FC<CustomInputProps> = ({ max, min, name, title, step =
   return (
     <div className="flex flex-col gap-2 py-4">
       <div className="flex p-2 gap-2 items-center">
-        <label>{title}</label>
+        <div className="flex flex-col">
+          <label>{title}</label>
+          {subtitle && <span className="text-xs italic opacity-70">{subtitle}</span>}
+        </div>
         <Input
           className="text-black max-w-fit"
           type="number"
