@@ -11,7 +11,7 @@ const CardOutput: React.FC<CardOutputProps> = ({ title, description, Component }
     <Card className="bg-slate-600 text-white p-2 h-fit">
       <CardTitle>{title}</CardTitle>
       <CardContent>
-        <div className="w-96 h-96">
+        <div className="w-96 h-96 overflow-y-auto">
           <Component />
         </div>
       </CardContent>

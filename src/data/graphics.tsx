@@ -6,6 +6,8 @@ import RentEquivalentNoLoss from '@/components/graphics/RentEquivalentNoLoss';
 import RentalInvestment from '@/components/graphics/RentalInvestment';
 import RentalInvestmentDetails from '@/components/graphics/RentalInvestmentDetails';
 import SavingsWithSpendings from '@/components/graphics/SavingsWithSpendings';
+import SciIsInvestment from '@/components/graphics/SciIsInvestment';
+import SciIsInvestmentDetails from '@/components/graphics/SciIsInvestmentDetails';
 import Soulte from '@/components/graphics/Soulte';
 import SpendingsFromProject from '@/components/graphics/SpendingsFromProject';
 import TotalCost from '@/components/graphics/TotalCost';
@@ -29,6 +31,12 @@ const graphics = [
     Component: RentalInvestmentDetails,
     title: 'Investissement locatif - fiscalité & coûts',
     name: 'rentalInvestmentDetails',
+  },
+  { Component: SciIsInvestment, title: 'SCI à l\'IS - synthèse', name: 'sciIsInvestment' },
+  {
+    Component: SciIsInvestmentDetails,
+    title: 'SCI à l\'IS - amortissement & fiscalité',
+    name: 'sciIsInvestmentDetails',
   },
 ];
 

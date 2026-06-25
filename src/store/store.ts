@@ -37,6 +37,8 @@ const DEFAULT_FILTERS: Filters = {
   soulte: false,
   rentalInvestment: false,
   rentalInvestmentDetails: false,
+  sciIsInvestment: false,
+  sciIsInvestmentDetails: false,
   isLMNP: false,
   hasGLI: false,
   hasPropertyManagement: false,

@@ -2,6 +2,7 @@ import {
   calculateAnnualLMNPDepreciation,
   calculateAnnualNonRecoverableCopro,
   calculateAnnualPropertyTaxNetOfTom,
+  calculateCorporateTax,
   calculateGrossYield,
   calculateIndebtedness,
   calculateLoanAmount,
@@ -17,6 +18,9 @@ import {
   calculateRentalIncomeTax,
   calculateRentalIndebtedness,
   calculateRentalTaxableIncome,
+  calculateSciAnnualDepreciation,
+  calculateSciMonthlyCashflowBeforeTax,
+  calculateSciTaxableProfit,
   calculateTotalAcquisitionCost,
   calculateTotalSalary,
   calculateTotalcontribution,
@@ -130,5 +134,42 @@ describe('simulationResults', () => {
   test('calculateRentalIndebtedness', () => {
     expect(calculateRentalIndebtedness(700, 0, 3000, 800)).toBeCloseTo(0.197, 3);
     expect(calculateRentalIndebtedness(700, 200, 3000, 800)).toBeCloseTo(0.253, 3);
+  });
+
+  test('calculateSciAnnualDepreciation', () => {
+    // price 200_000, land 15% → bâti = 170_000 / 30 = 5666.67
+    // notary 16_000 / 20 = 800
+    const result = calculateSciAnnualDepreciation(200_000, 16_000, 20, 0.15, 30);
+    expect(result.building).toBeCloseTo(5666.67, 1);
+    expect(result.notary).toBeCloseTo(800, 1);
+    expect(result.total).toBeCloseTo(6466.67, 1);
+  });
+
+  test('calculateSciAnnualDepreciation with zero loanDuration', () => {
+    const result = calculateSciAnnualDepreciation(100_000, 8_000, 0, 0.15, 30);
+    expect(result.notary).toBe(0);
+  });
+
+  test('calculateSciTaxableProfit', () => {
+    // rent 800/mo → 9600/yr ; charges 700+1100+150+3000+1200+0+6466.67 = 12616.67
+    // profit = 9600 - 12616.67 = -3016.67
+    expect(calculateSciTaxableProfit(800, 700, 1100, 150, 3000, 1200, 0, 6466.67)).toBeCloseTo(-3016.67, 1);
+  });
+
+  test('calculateCorporateTax', () => {
+    // bénéfice négatif → 0
+    expect(calculateCorporateTax(-1000, 0.15, 0.25, 42_500)).toBe(0);
+    // bénéfice 10_000 → 15% × 10_000 = 1500
+    expect(calculateCorporateTax(10_000, 0.15, 0.25, 42_500)).toBeCloseTo(1500, 0);
+    // bénéfice 50_000 → 15% × 42 500 + 25% × 7 500 = 6375 + 1875 = 8250
+    expect(calculateCorporateTax(50_000, 0.15, 0.25, 42_500)).toBeCloseTo(8250, 0);
+  });
+
+  test('calculateSciMonthlyCashflowBeforeTax', () => {
+    // inflow 800+50 = 850 ; outflow 700+100+1200/12+150/12+1200/12 + 0 = 700+100+100+12.5+100 = 1012.5
+    // cashflow = 850 - 1012.5 = -162.5
+    expect(calculateSciMonthlyCashflowBeforeTax(800, 50, 700, 100, 1200, 150, 1200)).toBeCloseTo(-162.5, 1);
+    // avec extras 80
+    expect(calculateSciMonthlyCashflowBeforeTax(800, 50, 700, 100, 1200, 150, 1200, 80)).toBeCloseTo(-242.5, 1);
   });
 });

@@ -205,3 +205,75 @@ export const calculateRentalIndebtedness = (
   return +(charges / income).toFixed(3);
 };
 
+export const calculateSciAnnualDepreciation = (
+  price: number,
+  notaryFees: number,
+  loanDuration: number,
+  landRatio: number,
+  buildingYears: number
+): { building: number; notary: number; total: number } => {
+  const building = Math.max(0, price) * (1 - landRatio) / buildingYears;
+  const notary = loanDuration > 0 ? Math.max(0, notaryFees) / loanDuration : 0;
+  const total = building + notary;
+  return {
+    building: +building.toFixed(2),
+    notary: +notary.toFixed(2),
+    total: +total.toFixed(2),
+  };
+};
+
+export const calculateSciTaxableProfit = (
+  rentHC: number,
+  nonRecoverableCoproAnnual: number,
+  propertyTaxNetOfTom: number,
+  pnoAnnual: number,
+  firstYearInterest: number,
+  accountingFeesAnnual: number,
+  operatingDeductiblesAnnual: number,
+  annualDepreciation: number
+): number => {
+  return +(
+    rentHC * 12 -
+    nonRecoverableCoproAnnual -
+    propertyTaxNetOfTom -
+    pnoAnnual -
+    firstYearInterest -
+    accountingFeesAnnual -
+    operatingDeductiblesAnnual -
+    annualDepreciation
+  ).toFixed(2);
+};
+
+export const calculateCorporateTax = (
+  taxableProfit: number,
+  reducedRate: number,
+  standardRate: number,
+  reducedThreshold: number
+): number => {
+  if (taxableProfit <= 0) return 0;
+  const reducedPart = Math.min(taxableProfit, reducedThreshold);
+  const standardPart = Math.max(0, taxableProfit - reducedThreshold);
+  return +(reducedPart * reducedRate + standardPart * standardRate).toFixed(2);
+};
+
+export const calculateSciMonthlyCashflowBeforeTax = (
+  rentHC: number,
+  recoverableCharges: number,
+  monthlyPayment: number,
+  coproCharges: number,
+  propertyTax: number,
+  pnoAnnual: number,
+  accountingFeesAnnual: number,
+  extraMonthlyCharges = 0
+): number => {
+  const inflow = rentHC + recoverableCharges;
+  const outflow =
+    monthlyPayment +
+    coproCharges +
+    propertyTax / 12 +
+    pnoAnnual / 12 +
+    accountingFeesAnnual / 12 +
+    extraMonthlyCharges;
+  return +(inflow - outflow).toFixed(2);
+};
+
