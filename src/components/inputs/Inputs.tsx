@@ -2,13 +2,31 @@ import React from 'react';
 import type { PropsWithChildren } from 'react';
 import CustomInput from './CustomInput';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import Filter from '@/components/filters/Filter';
+import { Separator } from '@/components/ui/separator';
 import inputs from '@/data/inputs';
 import type { InputValue } from '@/types/commonTypes';
 import useIsMobile from '@/hooks/useIsMobile';
 
 const { mainInformation, coInformation, otherInformation, rentalInvestmentInformation } = inputs;
 
-const InputsSectionItems = ({ title, value, info }: { title: string; value: string; info: InputValue[] }) => {
+const rentalToggles = [
+  { name: 'isLMNP', title: 'LMNP (amortissement 3%)' },
+  { name: 'hasGLI', title: 'Garantie loyers impayés' },
+  { name: 'hasPropertyManagement', title: 'Gestion locative (agence)' },
+];
+
+const InputsSectionItems = ({
+  title,
+  value,
+  info,
+  toggles,
+}: {
+  title: string;
+  value: string;
+  info: InputValue[];
+  toggles?: { name: string; title: string }[];
+}) => {
   return (
     <AccordionItem value={value}>
       <AccordionTrigger>{title}</AccordionTrigger>
@@ -16,6 +34,14 @@ const InputsSectionItems = ({ title, value, info }: { title: string; value: stri
         {info.map((input) => (
           <CustomInput key={input.name} {...input} />
         ))}
+        {toggles && toggles.length > 0 && (
+          <>
+            <Separator className="my-2" />
+            {toggles.map((toggle) => (
+              <Filter key={toggle.name} name={toggle.name} title={toggle.title} />
+            ))}
+          </>
+        )}
       </AccordionContent>
     </AccordionItem>
   );
@@ -45,7 +71,12 @@ const Inputs: React.FC = () => {
       <InputsSectionItems title="Informations principales" value="main" info={mainInformation} />
       <InputsSectionItems title="Co-emprunteur" value="co" info={coInformation} />
       <InputsSectionItems title="Autres informations" value="other" info={otherInformation} />
-      <InputsSectionItems title="Investissement locatif" value="rental" info={rentalInvestmentInformation} />
+      <InputsSectionItems
+        title="Investissement locatif"
+        value="rental"
+        info={rentalInvestmentInformation}
+        toggles={rentalToggles}
+      />
     </>
   );
 

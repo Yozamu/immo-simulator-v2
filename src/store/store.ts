@@ -37,6 +37,9 @@ const DEFAULT_FILTERS: Filters = {
   soulte: false,
   rentalInvestment: false,
   rentalInvestmentDetails: false,
+  isLMNP: false,
+  hasGLI: false,
+  hasPropertyManagement: false,
 };
 
 type StoreState = {

@@ -1,14 +1,18 @@
 import useMainStore from '@/store/store';
+import { GLI_RATE, LMNP_DEPRECIATION_RATE, PROPERTY_MANAGEMENT_RATE } from '@/utils/constants';
 import {
+  calculateAnnualLMNPDepreciation,
   calculateAnnualNonRecoverableCopro,
   calculateAnnualPropertyTaxNetOfTom,
   calculateGrossYield,
   calculateLoanAmount,
   calculateLoanRepayment,
   calculateMonthlyCashflow,
+  calculateMonthlyGLICost,
   calculateMonthlyInsuranceCost,
   calculateMonthlyLoanCost,
   calculateMonthlyPayment,
+  calculateMonthlyPropertyManagementCost,
   calculateNetYield,
   calculateNotaryFees,
   calculatePnoCost,
@@ -39,6 +43,9 @@ const useRentalCalculations = () => {
   const tom = useMainStore((state) => state.inputValues.tom);
   const tmi = useMainStore((state) => state.inputValues.tmi);
   const currentCredits = useMainStore((state) => state.inputValues.currentCredits);
+  const isLMNP = useMainStore((state) => state.filters.isLMNP);
+  const hasGLI = useMainStore((state) => state.filters.hasGLI);
+  const hasPropertyManagement = useMainStore((state) => state.filters.hasPropertyManagement);
 
   const notaryFees = calculateNotaryFees(price);
   const totalSalary = calculateTotalSalary(salary, hasCoBorrower ? coSalary : 0);
@@ -57,14 +64,39 @@ const useRentalCalculations = () => {
   const { interests } = calculateLoanRepayment(loanAmount, loanRate, loanDuration);
   const firstYearInterest = +interests.slice(0, 12).reduce((acc, curr) => acc + curr, 0).toFixed(2);
 
+  const lmnpAnnualDepreciation = isLMNP ? calculateAnnualLMNPDepreciation(price, LMNP_DEPRECIATION_RATE) : 0;
+  const gliMonthly = hasGLI ? calculateMonthlyGLICost(rentHC, GLI_RATE) : 0;
+  const managementMonthly = hasPropertyManagement
+    ? calculateMonthlyPropertyManagementCost(rentHC, PROPERTY_MANAGEMENT_RATE)
+    : 0;
+  const gliAnnual = +(gliMonthly * 12).toFixed(2);
+  const managementAnnual = +(managementMonthly * 12).toFixed(2);
+
+  const operatingDeductiblesAnnual = gliAnnual + managementAnnual;
+  const extraDeductiblesAnnual = lmnpAnnualDepreciation + operatingDeductiblesAnnual;
+
   const taxableIncomeRaw = calculateRentalTaxableIncome(
     rentHC,
     nonRecoverableCoproAnnual,
     propertyTaxNetOfTom,
     pnoAnnual,
-    firstYearInterest
+    firstYearInterest,
+    extraDeductiblesAnnual
   );
   const annualTax = calculateRentalIncomeTax(taxableIncomeRaw, tmi);
+
+  const taxableIncomeWithoutLMNP = calculateRentalTaxableIncome(
+    rentHC,
+    nonRecoverableCoproAnnual,
+    propertyTaxNetOfTom,
+    pnoAnnual,
+    firstYearInterest,
+    operatingDeductiblesAnnual
+  );
+  const annualTaxWithoutLMNP = calculateRentalIncomeTax(taxableIncomeWithoutLMNP, tmi);
+  const lmnpAnnualSavings = isLMNP ? +Math.max(0, annualTaxWithoutLMNP - annualTax).toFixed(2) : 0;
+  const lmnpMonthlySavings = +(lmnpAnnualSavings / 12).toFixed(2);
+
   const grossYield = calculateGrossYield(rentHC, totalAcquisitionCost);
   const netYield = calculateNetYield(
     rentHC,
@@ -72,8 +104,10 @@ const useRentalCalculations = () => {
     propertyTaxNetOfTom,
     pnoAnnual,
     vacancyCost,
-    totalAcquisitionCost
+    totalAcquisitionCost,
+    operatingDeductiblesAnnual
   );
+  const extraMonthlyCharges = gliMonthly + managementMonthly;
   const monthlyCashflow = calculateMonthlyCashflow(
     rentHC,
     recoverableCharges,
@@ -81,8 +115,10 @@ const useRentalCalculations = () => {
     coproCharges,
     propertyTax,
     pnoAnnual,
-    annualTax
+    annualTax,
+    extraMonthlyCharges
   );
+  const monthlyCashflowBeforeTax = +(monthlyCashflow + annualTax / 12).toFixed(2);
   const indebtedness = calculateRentalIndebtedness(monthlyPayment, currentCredits, totalSalary, rentHC);
 
   return {
@@ -92,6 +128,7 @@ const useRentalCalculations = () => {
     grossYield,
     netYield,
     monthlyCashflow,
+    monthlyCashflowBeforeTax,
     annualCashflow: +(monthlyCashflow * 12).toFixed(2),
     savingsEffort: monthlyCashflow < 0 ? +Math.abs(monthlyCashflow).toFixed(2) : 0,
     taxableIncome: Math.max(0, +taxableIncomeRaw.toFixed(2)),
@@ -101,6 +138,16 @@ const useRentalCalculations = () => {
     nonRecoverableCoproAnnual: +nonRecoverableCoproAnnual.toFixed(2),
     propertyTaxNetOfTom: +propertyTaxNetOfTom.toFixed(2),
     firstYearInterest,
+    isLMNP,
+    hasGLI,
+    hasPropertyManagement,
+    lmnpAnnualDepreciation: +lmnpAnnualDepreciation.toFixed(2),
+    lmnpMonthlySavings,
+    lmnpAnnualSavings,
+    gliMonthly,
+    gliAnnual,
+    managementMonthly,
+    managementAnnual,
   };
 };
 

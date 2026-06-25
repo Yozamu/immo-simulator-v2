@@ -122,9 +122,17 @@ export const calculateRentalTaxableIncome = (
   nonRecoverableCoproAnnual: number,
   propertyTaxNetOfTom: number,
   pnoAnnual: number,
-  firstYearInterest: number
+  firstYearInterest: number,
+  extraDeductiblesAnnual = 0
 ): number => {
-  return rentHC * 12 - nonRecoverableCoproAnnual - propertyTaxNetOfTom - pnoAnnual - firstYearInterest;
+  return (
+    rentHC * 12 -
+    nonRecoverableCoproAnnual -
+    propertyTaxNetOfTom -
+    pnoAnnual -
+    firstYearInterest -
+    extraDeductiblesAnnual
+  );
 };
 
 export const calculateRentalIncomeTax = (taxableIncome: number, tmi: number): number => {
@@ -144,10 +152,12 @@ export const calculateNetYield = (
   propertyTaxNetOfTom: number,
   pnoAnnual: number,
   vacancyCost: number,
-  totalAcquisitionCost: number
+  totalAcquisitionCost: number,
+  extraAnnualCharges = 0
 ): number => {
   if (totalAcquisitionCost <= 0) return 0;
-  const netIncome = rentHC * 12 - nonRecoverableCoproAnnual - propertyTaxNetOfTom - pnoAnnual - vacancyCost;
+  const netIncome =
+    rentHC * 12 - nonRecoverableCoproAnnual - propertyTaxNetOfTom - pnoAnnual - vacancyCost - extraAnnualCharges;
   return +((netIncome / totalAcquisitionCost) * 100).toFixed(2);
 };
 
@@ -158,11 +168,25 @@ export const calculateMonthlyCashflow = (
   coproCharges: number,
   propertyTax: number,
   pnoAnnual: number,
-  annualTax: number
+  annualTax: number,
+  extraMonthlyCharges = 0
 ): number => {
   const monthlyInflow = rentHC + recoverableCharges;
-  const monthlyOutflow = monthlyPayment + coproCharges + propertyTax / 12 + pnoAnnual / 12 + annualTax / 12;
+  const monthlyOutflow =
+    monthlyPayment + coproCharges + propertyTax / 12 + pnoAnnual / 12 + annualTax / 12 + extraMonthlyCharges;
   return +(monthlyInflow - monthlyOutflow).toFixed(2);
+};
+
+export const calculateAnnualLMNPDepreciation = (price: number, rate: number): number => {
+  return +(Math.max(0, price) * rate).toFixed(2);
+};
+
+export const calculateMonthlyGLICost = (rentHC: number, rate: number): number => {
+  return +(Math.max(0, rentHC) * rate).toFixed(2);
+};
+
+export const calculateMonthlyPropertyManagementCost = (rentHC: number, rate: number): number => {
+  return +(Math.max(0, rentHC) * rate).toFixed(2);
 };
 
 export const calculateVacancyCost = (rentHC: number): number => {

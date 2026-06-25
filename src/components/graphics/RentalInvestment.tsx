@@ -4,7 +4,20 @@ import useRentalCalculations from '@/hooks/useRentalCalculations';
 import { COLORS } from '@/utils/constants';
 
 const RentalInvestment = () => {
-  const { monthlyPayment, indebtedness, grossYield, netYield, monthlyCashflow } = useRentalCalculations();
+  const {
+    monthlyPayment,
+    indebtedness,
+    grossYield,
+    netYield,
+    monthlyCashflow,
+    monthlyCashflowBeforeTax,
+    isLMNP,
+    hasGLI,
+    hasPropertyManagement,
+    gliMonthly,
+    managementMonthly,
+    lmnpMonthlySavings,
+  } = useRentalCalculations();
 
   const debtPercent = +(indebtedness * 100).toFixed(2);
   const doable = indebtedness <= 0.35;
@@ -12,8 +25,10 @@ const RentalInvestment = () => {
   const debtBarColor = doable ? (indebtedness <= 0.3 ? COLORS[0] : COLORS[1]) : COLORS[2];
 
   const cashflowPositive = monthlyCashflow >= 0;
+  const cashflowBeforeTaxPositive = monthlyCashflowBeforeTax >= 0;
   const yieldColor = netYield >= 4 ? COLORS[0] : netYield >= 2 ? COLORS[1] : COLORS[2];
   const netYieldRatio = Math.min(100, Math.max(0, (netYield / 8) * 100));
+  const hasExtras = hasGLI || hasPropertyManagement || isLMNP;
 
   return (
     <div className="text-left flex flex-col gap-2 pt-4">
@@ -34,6 +49,32 @@ const RentalInvestment = () => {
       </label>
       <Progress color={yieldColor} value={netYieldRatio} />
       <Separator className="my-2" />
+      {hasExtras && (
+        <>
+          {hasGLI && (
+            <label>
+              Coût GLI : <strong className="text-red-400">-{Math.round(gliMonthly)}€/mois</strong>
+            </label>
+          )}
+          {hasPropertyManagement && (
+            <label>
+              Gestion locative : <strong className="text-red-400">-{Math.round(managementMonthly)}€/mois</strong>
+            </label>
+          )}
+          {isLMNP && (
+            <label>
+              Économies LMNP : <strong className="text-green-400">+{Math.round(lmnpMonthlySavings)}€/mois</strong>
+            </label>
+          )}
+        </>
+      )}
+      <label>
+        Cashflow mensuel avant impôts :{' '}
+        <strong className={cashflowBeforeTaxPositive ? 'text-green-500' : 'text-red-500'}>
+          {monthlyCashflowBeforeTax >= 0 ? '+' : ''}
+          {Math.round(monthlyCashflowBeforeTax)}€
+        </strong>
+      </label>
       <label>
         Cashflow mensuel :{' '}
         <strong className={cashflowPositive ? 'text-green-500' : 'text-red-500'}>

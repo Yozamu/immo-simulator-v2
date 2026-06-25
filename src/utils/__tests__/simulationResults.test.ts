@@ -1,13 +1,16 @@
 import {
+  calculateAnnualLMNPDepreciation,
   calculateAnnualNonRecoverableCopro,
   calculateAnnualPropertyTaxNetOfTom,
   calculateGrossYield,
   calculateIndebtedness,
   calculateLoanAmount,
   calculateMonthlyCashflow,
+  calculateMonthlyGLICost,
   calculateMonthlyInsuranceCost,
   calculateMonthlyLoanCost,
   calculateMonthlyPayment,
+  calculateMonthlyPropertyManagementCost,
   calculateNetYield,
   calculateNotaryFees,
   calculatePnoCost,
@@ -80,6 +83,7 @@ describe('simulationResults', () => {
 
   test('calculateRentalTaxableIncome', () => {
     expect(calculateRentalTaxableIncome(1000, 700, 1100, 150, 3000)).toBe(7050);
+    expect(calculateRentalTaxableIncome(1000, 700, 1100, 150, 3000, 4000)).toBe(3050);
   });
 
   test('calculateRentalIncomeTax', () => {
@@ -95,10 +99,28 @@ describe('simulationResults', () => {
 
   test('calculateNetYield', () => {
     expect(calculateNetYield(800, 700, 1100, 150, 800, 240_000)).toBeCloseTo(2.85, 1);
+    expect(calculateNetYield(800, 700, 1100, 150, 800, 240_000, 1200)).toBeCloseTo(2.35, 1);
   });
 
   test('calculateMonthlyCashflow', () => {
     expect(calculateMonthlyCashflow(800, 50, 700, 100, 1200, 150, 2400)).toBeCloseTo(-262.5, 1);
+    expect(calculateMonthlyCashflow(800, 50, 700, 100, 1200, 150, 2400, 80)).toBeCloseTo(-342.5, 1);
+  });
+
+  test('calculateAnnualLMNPDepreciation', () => {
+    expect(calculateAnnualLMNPDepreciation(200_000, 0.03)).toBe(6000);
+    expect(calculateAnnualLMNPDepreciation(0, 0.03)).toBe(0);
+    expect(calculateAnnualLMNPDepreciation(-1000, 0.03)).toBe(0);
+  });
+
+  test('calculateMonthlyGLICost', () => {
+    expect(calculateMonthlyGLICost(800, 0.025)).toBe(20);
+    expect(calculateMonthlyGLICost(0, 0.025)).toBe(0);
+  });
+
+  test('calculateMonthlyPropertyManagementCost', () => {
+    expect(calculateMonthlyPropertyManagementCost(800, 0.08)).toBe(64);
+    expect(calculateMonthlyPropertyManagementCost(0, 0.08)).toBe(0);
   });
 
   test('calculateVacancyCost', () => {
